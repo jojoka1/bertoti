@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Cidades Turisticas</title>
+	
+    
+	<script src="js/jquery.js"></script>
+	
+
+	<link href="css/bootstrap.min.css" rel=stylesheet>
+	
+	
+	<script>
+		$(document).ready(function(){
+			
+
+			$("#busca").click(function() {
+
+				var estado = $( "#modelo option:selected" ).text();
+				var cidade = $( "#marca option:selected" ).text();
+				var lugares = $( "#cor option:selected" ).text();
+					
+				$("#dadosCarro").empty();
+					
+				var url = "/cidade/"+estado+"/"+cidade+"/"+lugares+"";
+					
+
+				$.getJSON(url, function(data) {
+						
+						var itens = [];
+						
+						$.each(data, function(i){
+						
+							itens.push("<tr> <td>"+ this.nome +"</td><td>"+ this.lugares.cartaoPostal + "</td><td>"+ this.lugares.hoteis + "</td><td>"+ this.lugares.restaurantes + "</td></tr>");
+							
+						});
+									
+						$("#dadosCidade").append(itens);
+						
+				});
+
+			});
+
+		});
+
+	</script>
+
+   
+  </head>
+
+
+  <body>
+		
+
+  		<div id="painelBusca">
+            
+		
+		
+            <div class="form-group col-md-4">
+                <label>Estado</label>
+                <select id="modelo" class="input-large form-control">
+                    <option value="" selected="selected">Escolha o estado</option>
+                    <option value="gol">MT</option>
+                    <option value="fox">SP</option>
+                    <option value="fusca">RJ</option>
+                    
+                </select>
+            </div>
+		
+		
+		
+            <div class="form-group col-md-4">
+                <label>Marca</label>
+                <select id="marca" class="input-large form-control">
+                    <option value="" selected="selected">Escolha o ano</option>
+                    <option value="vw">vw</option>
+                    <option value="fiat">fiat</option>
+                    <option value="ferrari">ferrari</option>
+                    
+                </select>
+            </div>
+		
+		
+		
+            <div class="form-group col-md-4">
+                <label>Cor</label>
+                <select id="cor" class="input-large form-control">
+                    <option value="" selected="selected">Escolha o periodo</option>
+                    <option value="vermelho">vermelho</option>
+                    <option value="verde">verde</option>
+                    
+                </select>
+            </div>
+		
+		</div>
+		
+		<button id="busca" class="btn btn-primary col-md-offset-5">Buscar</button>
+		
+		<table class="table table-bordered"> 
+			<caption>Carros</caption>
+				<thead>
+					<tr> 
+						<th>Placa</th>
+						<th>Modelo</th> 
+						<th>Marca</th> 
+						<th>Cor</th> 
+					</tr> 
+				</thead> 
+				
+				<tbody id="dadosCarro"> 
+					
+				</tbody> 
+		</table>
+
+		
+  </body>
+  
+</html>
